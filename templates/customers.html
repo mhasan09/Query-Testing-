@@ -7,6 +7,8 @@
 
     <link href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css"
           rel="stylesheet" type="text/css">
+      <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          rel="stylesheet" type="text/css">
 </head>
 <body>
 <table id="example" class="display" cellspacing="0" width="100%">
@@ -17,20 +19,66 @@
         <th>Mobile Number</th>
         <th>Due Amount</th>
         <th></th>
+        <th></th>
     </tr>
+
+
     </thead>
     <tbody>
-{% comment %}    {% for i in customer %}
-        <td>{{ i.customer_name }}</td>
-    {% endfor %}{% endcomment %}
+    {% for i in customer %}
+        <tr>
+            <td>
+                <input type="checkbox" >
+            </td>
+        <td >{{ i.customer_name }}</td>
+        <td >{{ i.customer_mobile_number }}</td>
+        <td >{{ i.customer_due_amount }}</td>
+        <td ><a href="{% url 'customers' i.id %}"><i class="fa fa-angle-right"></i></a></td>
+        <td ></td>
+        </tr>
+
+
+    {% endfor %}
     </tbody>
 </table>
 
 </body>
+<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.0.2/js/dataTables.responsive.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/select/1.1.2/js/dataTables.select.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.0.2/js/dataTables.responsive.min.js"></script>
 <script>
+    var table = $('#example').DataTable({
+        responsive: {
+            details: {
+                type: 'column',
+                target: -1,
+            }
+        },
+        columnDefs: [{
+            targets: -1,
+            orderable: false,
+            searchable: false,
+            className: 'control',
+        }, {
+            targets: 0,
+            orderable: false,
+            searchable: false,
+            className: 'selectall-checkbox',
+        }
+
+
+        ],
+        select: {
+            style: 'multi',
+            selector: 'td:first-child',
+        },
+
+        order: [[0, 'desc']],
+
+
+    });
+    {#$.fn.dataTable.ext.errMode = 'none';#}
     table.on('select.dt deselect.dt', function (e, dt, type, indexes) {
         var countSelectedRows = table.rows({selected: true}).count();
         var countItems = table.rows().count();
@@ -67,7 +115,6 @@
         e.stopPropagation();
     });
 
-    $.fn.dataTable.ext.errMode = 'none';
 
 </script>
 </html>
