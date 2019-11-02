@@ -13,4 +13,7 @@ def data_load(request):
         obj.save()
 def data_send(request):
     customers = MSE_CUSTOMERS.objects.all()
-    return render(request,'customers.html',{'customers':customers})
+    context = {
+        'customer' : customers
+    }
+    return render(request,'customers.html',context)

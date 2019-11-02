@@ -18,6 +18,6 @@ from django.urls import path
 from queryApp.views import *
 
 urlpatterns = [
-    path('', data_send,name="home"),
-    path('data', data_load ,name="data"),
+    path('', data_send, name="home"),
+    path('data', data_load, name="data"),
 ]
