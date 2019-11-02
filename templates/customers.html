@@ -1,0 +1,72 @@
+<html>
+<head>
+    <link href="https://cdn.datatables.net/select/1.1.2/css/select.dataTables.min.css"
+          rel="stylesheet" type="text/css">
+    <link href="https://cdn.datatables.net/responsive/2.0.2/css/responsive.dataTables.min.css"
+          rel="stylesheet" type="text/css">
+
+    <link href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css"
+          rel="stylesheet" type="text/css">
+</head>
+<body>
+<table id="example" class="display" cellspacing="0" width="100%">
+    <thead>
+    <tr>
+        <th><input type="checkbox"></th>
+        <th>Name</th>
+        <th>Mobile Number</th>
+        <th>Due Amount</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+
+
+    </tbody>
+</table>
+
+</body>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.0.2/js/dataTables.responsive.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/select/1.1.2/js/dataTables.select.min.js"></script>
+<script>
+    table.on('select.dt deselect.dt', function (e, dt, type, indexes) {
+        var countSelectedRows = table.rows({selected: true}).count();
+        var countItems = table.rows().count();
+
+        if (countItems > 0) {
+            if (countSelectedRows == countItems) {
+                $('thead .selectall-checkbox input[type="checkbox"]', this).prop('checked', true);
+            } else {
+                $('thead .selectall-checkbox input[type="checkbox"]', this).prop('checked', false);
+            }
+        }
+
+        if (e.type === 'select') {
+            $('.selectall-checkbox input[type="checkbox"]', table.rows({selected: true}).nodes()).prop('checked', true);
+        } else {
+            $('.selectall-checkbox input[type="checkbox"]', table.rows({selected: false}).nodes()).prop('checked', false);
+        }
+    });
+
+    // When clicking on "thead .selectall-checkbox", trigger click on checkbox in that cell.
+    table.on('click', 'thead .selectall-checkbox', function () {
+        $('input[type="checkbox"]', this).trigger('click');
+    });
+
+
+    // When clicking on the checkbox in "thead .selectall-checkbox", define the actions.
+    table.on('click', 'thead .selectall-checkbox input[type="checkbox"]', function (e) {
+        if (this.checked) {
+            table.rows().select();
+        } else {
+            table.rows().deselect();
+        }
+
+        e.stopPropagation();
+    });
+
+    $.fn.dataTable.ext.errMode = 'none';
+
+</script>
+</html>
