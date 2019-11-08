@@ -32,3 +32,19 @@ def detail_view(request,id):
         'customer': customer
     }
     return render(request, 'customer_detail.html', context)
+
+
+
+def chart(request):
+    customer_name_array = []
+    customer_due_amount= []
+    customer = MSE_CUSTOMERS.objects.all()
+    for i in customer:
+       customer_name_array.append(i.customer_name)
+       customer_due_amount.append(i.customer_due_amount)
+    context = {
+        'customer': customer_name_array,
+        'customer_due': customer_due_amount,
+    }
+    return render(request, 'line_chart.html', context)
+

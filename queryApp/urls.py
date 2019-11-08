@@ -20,5 +20,6 @@ from queryApp.views import *
 urlpatterns = [
     path('', data_send, name="home"),
     path('data', data_load, name="data"),
+    path('chart', chart, name="data"),
     path('data/<int:id>/', detail_view, name="customers"),
 ]
