@@ -14,3 +14,14 @@ class MSE_CUSTOMERS(models.Model):
     def __str__(self):
         return str(self.customer_name) or 'u'
 
+class MSE_MANUFACTURERS(models.Model):
+    manufacturer_name = models.CharField("Manufacturer Name", max_length=150, null=True, blank=True)
+    selling_unit = models.IntegerField("Selling Unit", null=True, blank=True)
+
+
+    class Meta:
+        verbose_name_plural = "Manufacturers"
+
+    def __str__(self):
+        return str(self.manufacturer_name) or 'u'
+

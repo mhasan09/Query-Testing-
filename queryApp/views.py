@@ -11,6 +11,8 @@ def data_load(request):
         obj.customer_mobile_number = "01"+str(random.randint(300000000,999999999))
         obj.customer_due_amount =random.randint(10,10000)
         obj.save()
+
+
 def data_send(request):
     # customer_list = list()
     customer = MSE_CUSTOMERS.objects.all()
