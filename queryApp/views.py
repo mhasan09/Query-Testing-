@@ -55,3 +55,6 @@ def chart(request):
     }
     return render(request, 'line_chart.html', context)
 
+def map(request):
+    return render(request, 'map.html')
+

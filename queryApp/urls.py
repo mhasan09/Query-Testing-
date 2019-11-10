@@ -22,4 +22,5 @@ urlpatterns = [
     path('data', data_load, name="data"),
     path('chart', chart, name="data"),
     path('data/<int:id>/', detail_view, name="customers"),
+    path('map', map, name="customers"),
 ]
