@@ -4,14 +4,15 @@
 
 </head>
 <body>
-<div class="container">
-    <div class="row"><input type="text" id="customer_name"></div>
-    <div class="row"><input type="text" id="customer_mobile"></div>
-    <div class="row"><input type="text" id="customer_due_amount"></div>
-    <button type="button" class="btn btn-primary">SAVE</button>
-</div>
-
-
+    <div class="container-fluid">
+        <form action=" " method="POST" >
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-success">
+                Submit
+            </button>
+        </form>
+    </div>
 
 </body>
 <script
@@ -22,13 +23,20 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-<script>
-    var customer_name = "{{ customer.customer_name|safe }}";
-    var customer_mobile = "{{ customer.customer_mobile_number|safe }}";
-    var customer_due_amount = "{{ customer.customer_due_amount|safe }}";
-    $("#customer_name").val(customer_name);
-    $("#customer_mobile").val(customer_mobile);
-    $("#customer_due_amount").val(customer_due_amount);
-
-</script>
+{#<script>#}
+{#    var customer_name = "{{ customer.customer_name|safe }}";#}
+{#    var customer_mobile = "{{ customer.customer_mobile_number|safe }}";#}
+{#    var customer_due_amount = "{{ customer.customer_due_amount|safe }}";#}
+{#    $("#customer_name").val(customer_name);#}
+{#    $("#customer_mobile").val(customer_mobile);#}
+{#    $("#customer_due_amount").val(customer_due_amount);#}
+{#    $("#save_data").on('click',function () {#}
+{#        var edited_1 = $("#customer_name").val();#}
+{#        var edited_2 = $("#customer_mobile").val();#}
+{#        var edited_3 = $("#customer_due_amount").val();#}
+{#        $("#abc").text(edited_1+","+edited_2+","+edited_3)#}
+{##}
+{#    })#}
+{##}
+{#</script>#}
 </html>

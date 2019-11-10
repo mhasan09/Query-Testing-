@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .forms import createForm
 from queryApp.models import *
 import names,random
 # Create your views here.
@@ -30,8 +31,12 @@ def data_send(request):
 
 def detail_view(request,id):
     customer = MSE_CUSTOMERS.objects.get(id=id)
+    form = createForm(request.POST or None,instance=customer)
+    if form.is_valid():
+        form.save()
     context = {
-        'customer': customer
+        'customer': customer,
+        'form': form,
     }
     return render(request, 'customer_detail.html', context)
 

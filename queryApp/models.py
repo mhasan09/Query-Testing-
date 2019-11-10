@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 
 class MSE_CUSTOMERS(models.Model):
+
     customer_name = models.CharField("Customer Name", max_length=150, null=True, blank=True)
     customer_mobile_number = models.CharField("Mobile Number", max_length=13, null=True, blank=True)
     customer_due_amount = models.IntegerField("Due Amount", null=True, blank=True)
