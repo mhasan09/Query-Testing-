@@ -1,3 +1,5 @@
+from django.core.serializers import json
+from django.http import HttpResponse
 from django.shortcuts import render
 from .forms import createForm
 from queryApp.models import *
@@ -29,7 +31,7 @@ def data_send(request):
     }
     return render(request,'customers.html',context)
 
-def detail_view(request,id):
+def detail_view_via_form(request,id):
     customer = MSE_CUSTOMERS.objects.get(id=id)
     form = createForm(request.POST or None,instance=customer)
     if form.is_valid():
@@ -40,6 +42,13 @@ def detail_view(request,id):
     }
     return render(request, 'customer_detail.html', context)
 
+
+def detail_view(request,id):
+    customer = MSE_CUSTOMERS.objects.get(id=id)
+    context = {
+        'customer': customer,
+    }
+    return render(request, 'customer_detail_queryset.html', context)
 
 
 def chart(request):
@@ -58,3 +67,21 @@ def chart(request):
 def map(request):
     return render(request, 'map.html')
 
+
+def customer_saved(request):
+    customer_name = request.GET['customer_name']
+    customer_mobile_number = request.GET['customer_mobile_number']
+    customer_due_amount = request.GET['customer_due_amount']
+    customer = MSE_CUSTOMERS.objects.get(id=id)
+
+    for i in customer:
+        i.customer_name = customer_name
+        i.customer_mobile_number = customer_mobile_number
+        i.customer_due_amount = customer_due_amount
+        customer_name.save()
+        customer_mobile_number.save()
+        customer_due_amount.save()
+    data_dict = dict()
+    data_dict["status"] = "202"
+    return HttpResponse(json.dumps(data_dict))
+    # return HttpResponse(json.dumps(data_dict))

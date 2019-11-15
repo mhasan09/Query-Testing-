@@ -21,6 +21,8 @@ urlpatterns = [
     path('', data_send, name="home"),
     path('data', data_load, name="data"),
     path('chart', chart, name="data"),
-    path('data/<int:id>/', detail_view, name="customers"),
+    path('data/<int:id>/', detail_view_via_form, name="customers"),
+    path('dataq/<int:id>/', detail_view, name="customersq"),
+    path('customer_saved', customer_saved, name="customer_saved"),
     path('map', map, name="customers"),
 ]
