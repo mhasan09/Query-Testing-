@@ -5,14 +5,13 @@
 </head>
 <body>
 <div class="container">
-    <form action="" method="post" id="edit_form">{% csrf_token %}
     <div class="form-group">
         <input type="text" class="form-control" id="customer_name">
         <input type="text" class="form-control" id="customer_mobile">
         <input type="text" class="form-control" id="customer_due_amount">
         <button type="submit" class="btn btn-primary" id="save_data" onclick="saveData()">Submit</button>
+        <button class="btn btn-primary" id="view_data" >view</button>
     </div>
-    </form>
     <div id="abc">
         <h3 id="edited_customer_name"></h3>
         <h3 id="edited_customer_mobile"></h3>
@@ -28,8 +27,8 @@
         crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
 <script>
+
     var customer_name = "{{ customer.customer_name|safe }}";
     var customer_mobile = "{{ customer.customer_mobile_number|safe }}";
     var customer_due_amount = "{{ customer.customer_due_amount|safe }}";
@@ -38,24 +37,23 @@
     $("#customer_due_amount").val(customer_due_amount);
 
 
-        var queryDataSet = {
-            customer_name: $('#customer_name').val(),
-            customer_mobile: $('#customer_mobile').val(),
-            customer_due_amount: $('#customer_due_amount').val()
-        };
-        console.log("test", queryDataSet);
-    function saveData(queryDataSet){
-        $.ajax({
-            type:'POST',
-            url: '/customer_saved',
-            data:{
-                customer_name: $('#customer_name').val(),
-                customer_mobile_number: $('#customer_mobile').val(),
-                customer_due_amount: $('#customer_due_amount').val(),
-                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
-            },
-        });
-    }
+
+
+    $('#view_data').on('click',function () {
+
+        var a = $('#customer_name').val();
+        var b = $('#customer_mobile').val();
+        var c = $('#customer_due_amount').val();
+
+
+        $("#edited_customer_name").text(a);
+        $("#edited_customer_mobile").text(b);
+        $("#edited_customer_due_amount").text(c)
+    })
+</script>
+<script>
+
+
 
 
 </script>
