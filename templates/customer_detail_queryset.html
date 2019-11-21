@@ -36,86 +36,14 @@
     $("#customer_name").val(customer_name);
     $("#customer_mobile").val(customer_mobile);
     $("#customer_due_amount").val(customer_due_amount);
-    $("#save_data").on('click', function () {
-        var edited_1 = $("#customer_name").val();
-        var edited_2 = $("#customer_mobile").val();
-        var edited_3 = $("#customer_due_amount").val();
-        {#$("#abc").text(edited_1 + "," + edited_2 + "," + edited_3)#}
-        $("#edited_customer_name").text(edited_1);
-        $("#edited_customer_mobile").text(edited_2);
-        $("#edited_customer_due_amount").text(edited_3);
-        saveData();
-    });
-{% comment %}
 
-    function saveData() {
-        var saved_customer_name = $('#edited_customer_name').text();
-        var saved_customer_mobile = $('#edited_customer_mobile').text();
-        var saved_customer_due_amount = $('#edited_customer_due_amount').text();
-
-
-    }
-{% endcomment %}
-
-{% comment %}
-    function productEditSaved(queryDataSet) {
-        console.log(queryDataSet);
-        var tcv = null;
-        $.ajax({
-            'async': false,
-            'type': "GET",
-            'global': false,
-            'dataType': 'json',
-            'data': queryDataSet,
-            'Access-Control-Allow-Origin': '*',
-            'url': "/value/product_saved",
-            'success': function (data) {
-
-                tcv = data;
-            },
-            'error': function (data) {
-
-            }
-
-        });
-        return tcv;
-    }
-{% endcomment %}
-
-    {% comment %}   function saveProduct() {
-
-
-
-           var queryDataSet = {
-               key: key,
-               brand_name: brand_name_original,
-               manufacturer_name: manufacturer_name_original,
-               image_url: "",
-               product_name: brand_name_original,
-               category_name: product_name,
-               subcategory_name: product_name,
-
-
-           };
-
-           console.log("test", queryDataSet);
-
-
-           var result = productEditSaved(queryDataSet);
-
-
-       }{% endcomment %}
 
         var queryDataSet = {
-            key : key,
-            customer_name: saved_customer_name,
-            customer_mobile: saved_customer_mobile,
-            customer_due_amount: saved_customer_due_amount,
-
-
+            customer_name: $('#customer_name').val(),
+            customer_mobile: $('#customer_mobile').val(),
+            customer_due_amount: $('#customer_due_amount').val()
         };
         console.log("test", queryDataSet);
-         {#var result = productEditSaved(queryDataSet);#}
     function saveData(queryDataSet){
         $.ajax({
             type:'POST',
@@ -126,9 +54,6 @@
                 customer_due_amount: $('#customer_due_amount').val(),
                 csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
             },
-            success:function(){
-                alert("updated");
-            }
         });
     }
 
