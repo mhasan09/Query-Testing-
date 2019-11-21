@@ -46,14 +46,51 @@
         var c = $('#customer_due_amount').val();
 
 
-        $("#edited_customer_name").text(a);
-        $("#edited_customer_mobile").text(b);
-        $("#edited_customer_due_amount").text(c)
-    })
+         $("#edited_customer_name").text(a);
+         $("#edited_customer_mobile").text(b);
+         $("#edited_customer_due_amount").text(c)
+    });
+
+
+        function saveData() {
+
+            var queryDataSet = {
+                customer_name: $("#edited_customer_name").text(),
+                customer_mobile: $("#edited_customer_mobile").text(),
+                customer_due_amount: $("#edited_customer_due_amount").text()
+
+            };
+
+
+            console.log("test", queryDataSet);
+
+    }
+
+
 </script>
 <script>
 
+function customerEditSaved(queryDataSet) {
+    var tcv = null;
+    $.ajax({
+        'async': false,
+        'type': "GET",
+        'global': false,
+        'dataType': 'json',
+        'data': queryDataSet,
+        'Access-Control-Allow-Origin': '*',
+        'url': "/customer_saved",
+        'success': function (data) {
+            tcv = data;
+        },
+        'error': function (data) {
 
+
+        }
+
+    });
+    return tcv;
+}
 
 
 </script>

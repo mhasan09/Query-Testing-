@@ -72,8 +72,8 @@ def customer_saved(request):
     customer_name = request.GET['customer_name']
     customer_mobile_number = request.GET['customer_mobile_number']
     customer_due_amount = request.GET['customer_due_amount']
+    print(customer_due_amount,customer_mobile_number,customer_name)
     customer = MSE_CUSTOMERS.objects.get(id=id)
-
     for i in customer:
         i.customer_name = customer_name
         i.customer_mobile_number = customer_mobile_number
@@ -84,4 +84,3 @@ def customer_saved(request):
     data_dict = dict()
     data_dict["status"] = "202"
     return HttpResponse(json.dumps(data_dict))
-    # return HttpResponse(json.dumps(data_dict))
