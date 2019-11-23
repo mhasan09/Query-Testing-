@@ -23,6 +23,6 @@ urlpatterns = [
     path('chart', chart, name="data"),
     path('data/<int:id>/', detail_view_via_form, name="customers"),
     path('dataq/<int:id>/', detail_view, name="customersq"),
-    path('customer_saved', customer_saved, name="customer_saved"),
+    path('customer_saved', updateUser.as_view(), name="customer_saved"),
     path('map', map, name="customers"),
 ]

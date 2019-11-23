@@ -1,5 +1,5 @@
-from django.core.serializers import json
-from django.http import HttpResponse
+from django.views.generic import View
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from .forms import createForm
 from queryApp.models import *
@@ -45,8 +45,15 @@ def detail_view_via_form(request,id):
 
 def detail_view(request,id):
     customer = MSE_CUSTOMERS.objects.get(id=id)
+    customer_info = dict()
+    customer_info['id'] = customer.id
+    customer_info['customer_name'] = customer.customer_name
+    customer_info['customer_mobile'] = customer.customer_mobile_number
+    customer_info['customer_due_amount'] = customer.customer_due_amount
+    print(customer_info)
     context = {
         'customer': customer,
+        'customer_info' : customer_info
     }
     return render(request, 'customer_detail_queryset.html', context)
 
@@ -68,19 +75,26 @@ def map(request):
     return render(request, 'map.html')
 
 
-def customer_saved(request):
-    customer_name = request.GET['customer_name']
-    customer_mobile_number = request.GET['customer_mobile_number']
-    customer_due_amount = request.GET['customer_due_amount']
-    print(customer_due_amount,customer_mobile_number,customer_name)
-    customer = MSE_CUSTOMERS.objects.get(id=id)
-    for i in customer:
-        i.customer_name = customer_name
-        i.customer_mobile_number = customer_mobile_number
-        i.customer_due_amount = customer_due_amount
-        customer_name.save()
-        customer_mobile_number.save()
-        customer_due_amount.save()
-    data_dict = dict()
-    data_dict["status"] = "202"
-    return HttpResponse(json.dumps(data_dict))
+class updateUser(View):
+    def get(self,request):
+        id1 = request.GET.get('customer_id',None)
+        cn = request.GET.get('customer_name', None)
+        cmn = request.GET.get('customer_mobile_number', None)
+        cda = request.GET.get('customer_due_amount', None)
+        print("dddd",id1,cn,cmn,cda)
+        customer = MSE_CUSTOMERS.objects.get(id=id1)
+        customer.customer_name = cn
+        print("xxx")
+        customer.customer_mobile_number = cmn
+        customer.customer_due_amount = cda
+        customer.save()
+        customer = {
+            'id': customer.id,
+            'customer_name': customer.customer_name,
+            'customer_mobile_number': customer.customer_mobile_number,
+            'customer_due_amount': customer.customer_due_amount
+        }
+        data = {
+            'customer': customer
+        }
+        return JsonResponse(data)

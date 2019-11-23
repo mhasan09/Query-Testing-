@@ -5,13 +5,15 @@
 </head>
 <body>
 <div class="container">
+    <form id="edit_customer" action="">
     <div class="form-group">
         <input type="text" class="form-control" id="customer_name">
         <input type="text" class="form-control" id="customer_mobile">
         <input type="text" class="form-control" id="customer_due_amount">
-        <button type="submit" class="btn btn-primary" id="save_data" onclick="saveData()">Submit</button>
+        <button type="submit" class="btn btn-primary" id="save_data">Submit</button>
         <button class="btn btn-primary" id="view_data" >view</button>
     </div>
+    </form>
     <div id="abc">
         <h3 id="edited_customer_name"></h3>
         <h3 id="edited_customer_mobile"></h3>
@@ -28,10 +30,19 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script>
-
+    var customer_info = "{{ customer_info|safe }}";
     var customer_name = "{{ customer.customer_name|safe }}";
     var customer_mobile = "{{ customer.customer_mobile_number|safe }}";
     var customer_due_amount = "{{ customer.customer_due_amount|safe }}";
+    var customer_id = "{{ customer.id|safe }}";
+
+    var c_name = customer_info['cnn'];
+    var c_mobile = customer_info['cm'];
+    var c_due_amount = customer_info['cda'];
+
+
+    console.log("cus",c_name,c_mobile,c_due_amount)
+
     $("#customer_name").val(customer_name);
     $("#customer_mobile").val(customer_mobile);
     $("#customer_due_amount").val(customer_due_amount);
@@ -51,46 +62,34 @@
          $("#edited_customer_due_amount").text(c)
     });
 
-
-        function saveData() {
-
-            var queryDataSet = {
-                customer_name: $("#edited_customer_name").text(),
-                customer_mobile: $("#edited_customer_mobile").text(),
-                customer_due_amount: $("#edited_customer_due_amount").text()
-
-            };
-
-
-            console.log("test", queryDataSet);
-
-    }
-
-
 </script>
 <script>
 
-function customerEditSaved(queryDataSet) {
-    var tcv = null;
-    $.ajax({
-        'async': false,
-        'type': "GET",
-        'global': false,
-        'dataType': 'json',
-        'data': queryDataSet,
-        'Access-Control-Allow-Origin': '*',
-        'url': "/customer_saved",
-        'success': function (data) {
-            tcv = data;
-        },
-        'error': function (data) {
-
-
-        }
-
-    });
-    return tcv;
-}
+$("form#edit_customer").submit(function() {
+            var customer_id = "{{ customer.id|safe }}";
+            var customer_name_original = $("#edited_customer_name").text();
+            var customer_mobile_number_original =  $("#edited_customer_mobile").text();
+            var customer_due_amount_original = $("#edited_customer_due_amount").text();
+            console.log(customer_name_original,customer_mobile_number_original);
+    if (customer_name_original && customer_mobile_number_original && customer_due_amount_original) {
+        $.ajax({
+            url: '{% url "customer_saved" %}',
+            data: {
+                'customer_id' : customer_id,
+                'customer_name': customer_name_original,
+                'customer_mobile_number': customer_mobile_number_original,
+                'customer_due_amount': customer_due_amount_original,
+            },
+            dataType: 'json',
+            success: function () {
+                alert("saved")
+            }
+        });
+       } else {
+        alert("All fields must have a valid value.");
+    }
+    return false;
+});
 
 
 </script>
