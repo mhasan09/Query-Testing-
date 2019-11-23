@@ -45,15 +45,8 @@ def detail_view_via_form(request,id):
 
 def detail_view(request,id):
     customer = MSE_CUSTOMERS.objects.get(id=id)
-    customer_info = dict()
-    customer_info['id'] = customer.id
-    customer_info['customer_name'] = customer.customer_name
-    customer_info['customer_mobile'] = customer.customer_mobile_number
-    customer_info['customer_due_amount'] = customer.customer_due_amount
-    print(customer_info)
     context = {
         'customer': customer,
-        'customer_info' : customer_info
     }
     return render(request, 'customer_detail_queryset.html', context)
 
