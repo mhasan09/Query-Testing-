@@ -28,17 +28,17 @@
     var khulnaDivisionMap = ['BagerhatMap', 'ChuadangaMap', 'JessoreMap', 'JhenaidahMap', 'KhulnaMap', 'KushtiaMap', 'MaguraMap', 'MeherpurMap', 'NarailMap', 'SatkhiraMap'];
 
 
-
-        $("#DhakaMap").on('click',function () {
-        $.each(dhakaDivisionMap, function (i,j) {
-            $('#'+dhakaDivisionMap[i]).css("fill", "green");
+    for (i in dhakaDivisionMap) {
+        if (dhakaDivisionMap[i].indexOf !== 0) {
+            $('#' + dhakaDivisionMap[i]).on('click', function () {
+                $.each(dhakaDivisionMap, function (i, j) {
+                    $('#' + dhakaDivisionMap[i]).css("fill", "green");
+                });
             });
-        });
 
-    if(dhakaDivisionMap.indexOf() >= 0){
+        }
 
     }
-
 
 </script>
 
